@@ -34,17 +34,20 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="todo">
-      {todos.map((todo, index) => (
-        <Todo
-          key={index}
-          index={index}
-          todo={todo}
-          completeTodo={completeTodo}
-          removeTodo={removeTodo}
-        />
-      ))}
-      <TodoForm addTodo={addTodo} />
+    <div className="app">
+      <div className="todo-container">
+        <h4 className="todo-title">#Todo</h4>
+        {todos.map((todo, index) => (
+          <Todo
+            key={index}
+            index={index}
+            todo={todo}
+            completeTodo={completeTodo}
+            removeTodo={removeTodo}
+          />
+        ))}
+        <TodoForm addTodo={addTodo} />
+      </div>
     </div>
   );
 }
