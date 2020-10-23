@@ -1,24 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { Todo } from './Todo'
+import { TodoForm } from './TodoForm'
 
-function App() {
+interface ITodos {
+  text: string;
+  isCompleted?: boolean;
+}
+
+const TODOS = [
+  { text: "Learn about React", isCompleted: false },
+  { text: "Meet friend for lunch", isCompleted: false },
+  { text: "Try to convert todo tutorial from digital ocean to typescript", isCompleted: false }
+]
+
+export const App: React.FC = () => {
+  const [todos, setTodos] = useState<Array<ITodos>>(TODOS)
+
+  const addTodo = (text: any) => {
+    const newTodos = [...todos, { text }];
+    setTodos(newTodos);
+  };
+
+  const completeTodo = (index: number) => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setTodos(newTodos);
+  };
+
+  const removeTodo = (index: number) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="todo">
+      {todos.map((todo, index) => (
+        <Todo
+          key={index}
+          index={index}
+          todo={todo}
+          completeTodo={completeTodo}
+          removeTodo={removeTodo}
+        />
+      ))}
+      <TodoForm addTodo={addTodo} />
     </div>
   );
 }
